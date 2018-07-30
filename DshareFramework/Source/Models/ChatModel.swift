@@ -16,7 +16,7 @@ class ChatModel {
         newMessageRefHandle = messagesRef.observe(.childAdded, with: { (snapshot) in
             let messageData = snapshot.value as! Dictionary<String, Any>
             
-            if let senderID = messageData["senderID"] as! String!, let senderName = messageData["senderName"] as! String!, let recieversIds = messageData["recieversIds"] as! [String]!, let text = messageData["text"] as! String!, let exitMessage = messageData["exitMessage"] as! Bool! {
+            if let senderID = messageData["senderID"] as! String?, let senderName = messageData["senderName"] as! String?, let recieversIds = messageData["recieversIds"] as! [String]?, let text = messageData["text"] as! String?, let exitMessage = messageData["exitMessage"] as! Bool? {
                 self.delegate?.messageRecieved(senderID: senderID, senderName:senderName, recieversIds:recieversIds, text: text, exitMessage: exitMessage)
             }
         })

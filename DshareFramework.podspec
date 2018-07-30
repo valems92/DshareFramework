@@ -12,4 +12,11 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/valems92/DshareFramework.git", :tag => "1.0.0" }
   s.source_files = "DshareFramework"
   s.platform     = :ios, "10.0"
+
+  s.dependency 'Firebase/Core'
+  s.dependency 'Firebase/Database'
+  s.dependency 'Firebase/Auth'
+  s.dependency 'Firebase/Storage'
+  s.dependency 'Firebase/Messaging'
+
 end

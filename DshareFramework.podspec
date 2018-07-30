@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "DshareFramework"
-  s.version      = "0.0.1"
+  s.version      = "1.0.0"
   s.summary      = "DshareFramework is a framework for sharing and getting descount"
   s.description  = <<-DESC
   DshareFramework take care of saving your data in firebase, givess you a lot of tools to manage you share app
@@ -8,17 +8,8 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "http://EXAMPLE/DshareFramework"
   s.license      = "MIT"
-  s.author       = "Share"
-  s.source       = { :path => "." }
+  s.author       = "Dshare"
+  s.source       = { :git => "https://github.com/valems92/DshareFramework.git", :tag => "1.0.0" }
   s.source_files = "DshareFramework"
-  s.swift_version = "4" 
-  # s.platform     = :ios, "8.0"
-
-  s.dependency 'Firebase/Core'
-  s.dependency 'Firebase/Database'
-  s.dependency 'Firebase/Auth'
-  s.dependency 'Firebase/Storage'
-  s.dependency 'Firebase/Messaging'
-  s.dependency 'JSQMessagesViewController'
-
+  s.platform     = :ios, "10.0"
 end

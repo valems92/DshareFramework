@@ -47,7 +47,7 @@ class SearchModel {
         observers.append(ref.child("searches"))
     }
     
-    func getCurrentUserSearches<T: SchemaProtocol>(type: T.Type, id:String, callback:@escaping([T]) -> Void) {
+    func getSearchesByUserId<T: SchemaProtocol>(type: T.Type, id:String, callback:@escaping([T]) -> Void) {
         searchesRef.queryOrdered(byChild: "userId").queryEqual(toValue: id).observeSingleEvent(of: .value) {(snapshot:DataSnapshot) in
             var searches = [T]()
             for search in snapshot.children.allObjects {
@@ -59,6 +59,31 @@ class SearchModel {
             }
             
             callback(searches)
+        }
+    }
+    
+    func updateSearch(searchId:String, value:[AnyHashable : Any]) {
+        searchesRef.child(searchId).updateChildValues(value) {(error, dbref) in
+            if(error != nil) {
+                print("There was an error while updating search in DB")
+            }
+        }
+    }
+    
+    func removeValueFromSearch(searchId:String, key: String) {
+        searchesRef.child(searchId).child(key).removeValue()
+    }
+    
+    func startObserveCurrentUserSearches<T: SchemaProtocol>(type: T.Type, id:String, callback:@escaping([String], String)->Void) {
+        getSearchesByUserId(type: T.self, id: id) { (searches) in
+            for search in searches {
+                self.searchesRef.child(search.id).observe(.childAdded, with: { (snapshot) in
+                    if snapshot.key == "suggestionsId", let value = snapshot.value as? [String] {
+                        callback(value, search.id)
+                    }
+                })
+                self.observers.append(self.searchesRef.child(search.id))
+            }
         }
     }
     

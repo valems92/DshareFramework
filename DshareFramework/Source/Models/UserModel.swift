@@ -37,8 +37,10 @@ class UserModel {
                 }
                 else {
                     let ref = Database.database().reference().child("users").child(user.id)
-                    ref.setValue(user.toJson()){(error, dbref) in
-                        
+                    ref.setValue(user.toJson()){(error, dbRef) in
+                        if error != nil {
+                            completionBlock(nil, NSError(domain: "There was a problem creating the new user", code: 500, userInfo: nil))
+                        }
                     }
                     completionBlock(user.id, nil)
                 }
@@ -272,7 +274,7 @@ class UserModel {
         if ((password ?? "").isEmpty || (rePassword ?? "").isEmpty) {
             valid = false
         } else {
-            if rePassword!.contains(password!) {
+            if rePassword! != password! {
                 valid = false
             }
         }

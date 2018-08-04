@@ -57,7 +57,7 @@ public class Model {
         chatModel?.sendMessage(senderID: senderID, senderName: senderName, recieversIds: recieversIds, text: text, exitMessage: exitMessage)
     }
     
-    func removeMessegesObserver() {
+    public func removeMessegesObserver() {
         chatModel?.removeObserver()
     }
     
@@ -175,7 +175,7 @@ public class Model {
             
             for suggestion in suggestions {
                 let filter = suggClass.filterSuggestion(suggestion)
-                if filter {
+                if !filter {
                     filteredSuggestions.append(suggestion)
                     
                     group.enter()
@@ -194,7 +194,7 @@ public class Model {
                 if observe {
                     self.searchModel?.startObserveSearches(type: T.self, callback: { (search, status) in
                         let filter = suggClass.filterSuggestion(search!)
-                        if filter {
+                        if !filter {
                             ModelNotification.SuggestionsUpdate.post(data: search!, params: status)
                         }
                     })
@@ -207,8 +207,23 @@ public class Model {
     
     public func getCurrentUserSearches<T: SchemaProtocol>(type: T.Type, completionBlock:@escaping ([T]) -> Void) {
         let id = getCurrentUserId()
-        searchModel?.getCurrentUserSearches(type: T.self, id: id, callback: { (searches) in
+        searchModel?.getSearchesByUserId(type: T.self, id: id, callback: { (searches) in
             completionBlock(searches)
+        })
+    }
+    
+    public func updateSearch(searchId:String, value:[AnyHashable : Any]) {
+        searchModel?.updateSearch(searchId: searchId, value: value)
+    }
+    
+    public func removeValueFromSearch(searchId:String, key:String) {
+        searchModel?.removeValueFromSearch(searchId: searchId, key: key)
+    }
+    
+    public func startObserveCurrentUserSearches<T: SchemaProtocol>(type: T.Type) {
+        let id = getCurrentUserId()
+        searchModel?.startObserveCurrentUserSearches(type: T.self, id: id, callback: { (suggestionsId, search) in
+            ModelNotification.SearchUpdate.post(data: suggestionsId, params: search)
         })
     }
 

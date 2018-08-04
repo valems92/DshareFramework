@@ -133,8 +133,6 @@
 				B309DB23210DCF3E0059991D /* Models */,
 				B309DB1A210DBEFA0059991D /* Extensions */,
 				B309DB17210DBE6D0059991D /* Schemas */,
-				B309DAE7210DAD410059991D /* Initialization.swift */,
-				B309DB24210DCF540059991D /* Model.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -161,6 +159,7 @@
 				B36E3452210D957D00B6C7DF /* UserModel.swift */,
 				B309DB31210E0C490059991D /* SearchModel.swift */,
 				B3E2686B210F73DD0021F331 /* ChatModel.swift */,
+				B309DB24210DCF540059991D /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +204,7 @@
 		B3E26871210F76FF0021F331 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B309DAE7210DAD410059991D /* Initialization.swift */,
 				B3E2686F210F764C0021F331 /* HttpClientApi.swift */,
 				B309DB1F210DC1A60059991D /* Utils.swift */,
 				B3E26872210F77120021F331 /* Notifications.swift */,
